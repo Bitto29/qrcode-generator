@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        /* Your CSS styles here */
+
+        /* Dark Theme */
+        body {
+            background-color: #333;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #00bcd4;
+        }
+
+        label, button {
+            color: #00bcd4;
+        }
+
+        /* Container Styles */
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* QR Code Styles */
+        #qr-code {
+            margin: 20px;
+        }
+
+        /* Input Styles */
+        #text-input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #00bcd4;
+            border-radius: 5px;
+        }
+
+        /* Button Styles */
+        #generate-button {
+            background-color: #00bcd4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Download Button Styles */
+        #download-button {
+            background-color: #00bcd4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none; /* Initially hidden */
+        }
+
+        /* Advanced Options Styles */
+        .advanced-options {
+            margin-top: 20px;
+        }
+
+        label.advanced-label {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select.advanced-select, input.advanced-input {
+            padding: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QR Code Generator</h1>
+        <div class="advanced-options">
+            <label class="advanced-label" for="qr-size">QR Code Size:</label>
+            <input class="advanced-input" type="number" id="qr-size" value="128">
+
+            <label class="advanced-label" for="qr-color">QR Code Color:</label>
+            <input class="advanced-input" type="color" id="qr-color" value="#000000">
+
+            <label class="advanced-label" for="background-color">Background Color:</label>
+            <input class="advanced-input" type="color" id="background-color" value="#ffffff">
+        </div>
+       
+        <label for="text-input">Enter text or URL:</label>
+        <input type="text" id="text-input">
+        <button id="generate-button" onclick="generateQRCode()">Generate QR Code</button>
+        <div class="qrb" id="qr-code-container"></div>
+        <a id="download-button" download="qrcode.png">Download QR Code</a>
+    </div>
+
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script>
+        var qrCode = null; // Variable to store the QR code instance
+
+        function generateQRCode() {
+            // Get the input text
+            var text = document.getElementById('text-input').value;
+
+            // Check if the text is not empty
+            if (text.trim() !== '') {
+                // Remove previous QR code, if any
+                var qrCodeContainer = document.getElementById('qr-code-container');
+                while (qrCodeContainer.firstChild) {
+                    qrCodeContainer.removeChild(qrCodeContainer.firstChild);
+                }
+
+                // Get advanced options
+                var size = parseInt(document.getElementById('qr-size').value);
+                var qrColor = document.getElementById('qr-color').value;
+                var bgColor = document.getElementById('background-color').value;
+
+                // Create a new QR code element with advanced options
+                qrCode = new QRCode(qrCodeContainer, {
+                    text: text,
+                    width: size,
+                    height: size,
+                    colorDark: qrColor,
+                    colorLight: bgColor,
+                });
+
+                // Show the download button
+                document.getElementById('download-button').style.display = 'inline-block';
+            } else {
+                alert('Please enter some text or a URL.');
+            }
+        }
+    </script>
+</body>
+</html>
