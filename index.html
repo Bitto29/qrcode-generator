@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Generator</title>
+    <link rel="icon" href="b logo (2).PNG">
     <style>
         /* Your CSS styles here */
 
@@ -18,6 +19,11 @@
             color: #00bcd4;
         }
 
+        .bitto{
+            font-size: 13px;
+            color: white;
+        }
+
         label, button {
             color: #00bcd4;
         }
@@ -29,12 +35,17 @@
         }
 
         /* QR Code Styles */
-        #qr-code {
+        #qr-code-container {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
             margin: 20px;
         }
 
         /* Input Styles */
         #text-input {
+            margin-top: 10px;
+            margin-bottom: 10px;
             width: 80%;
             padding: 10px;
             font-size: 16px;
@@ -53,6 +64,10 @@
             border-radius: 5px;
         }
 
+        #generate-button:active{
+            background-color: #00a8be;
+        }
+
         /* Download Button Styles */
         #download-button {
             background-color: #00bcd4;
@@ -64,6 +79,10 @@
             border-radius: 5px;
             margin-top: 10px;
             display: none; /* Initially hidden */
+        }
+
+        #download-button:active{
+            background-color: #00a8be;
         }
 
         /* Advanced Options Styles */
@@ -81,11 +100,29 @@
             padding: 5px;
             font-size: 14px;
         }
+
+        /* Paragraph Styles */
+        .paragraph {
+            text-align: left;
+            margin: 20px;
+            padding: 10px;
+        }
+
+        .paragraph p {
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>QR Code Generator</h1>
+        <h1>Advanced QR Code Generator<p class="bitto">BITTO</p></h1>
+
+        <!-- Introduction Paragraph -->
+        <div class="paragraph">
+            <p>Welcome to the Advanced QR Code Generator! Our website is designed to make QR code creation easy and customizable. QR codes are powerful tools that can store information such as text, URLs, and more in a compact, scannable format. With our generator, you can quickly create QR codes tailored to your needs. In this guide, we'll walk you through the steps to generate QR codes, highlight the benefits of using our service, and provide a comparison with other similar websites.</p>
+        </div>
+
+        <!-- QR Code Input and Generation -->
         <div class="advanced-options">
             <label class="advanced-label" for="qr-size">QR Code Size:</label>
             <input class="advanced-input" type="number" id="qr-size" value="128">
@@ -96,12 +133,46 @@
             <label class="advanced-label" for="background-color">Background Color:</label>
             <input class="advanced-input" type="color" id="background-color" value="#ffffff">
         </div>
-       
+        
         <label for="text-input">Enter text or URL:</label>
         <input type="text" id="text-input">
         <button id="generate-button" onclick="generateQRCode()">Generate QR Code</button>
-        <div class="qrb" id="qr-code-container"></div>
+        <div id="qr-code-container"></div>
         <a id="download-button" download="qrcode.png">Download QR Code</a>
+
+        <!-- How to Use Paragraph -->
+        <div class="paragraph">
+            <p>How to Use the Advanced QR Code Generator:<br>
+            Generating a QR code on our website is a straightforward process. Follow these steps to create your customized QR code:</p>
+            <ol>
+                <li><strong>Step 1: Enter Your Content</strong><br>
+                Begin by entering the content you want to encode into the QR code. This can be a website URL, text, contact information, or anything you want to share.</li>
+                <li><strong>Step 2: Customize QR Code Settings (Optional)</strong><br>
+                If you wish to customize your QR code further, use the advanced options provided on the page. You can adjust the QR code size, color, and background color to match your preferences.</li>
+                <li><strong>Step 3: Generate QR Code</strong><br>
+                Click the "Generate QR Code" button. Our website will process your input and generate a QR code image based on your specifications.</li>
+                <li><strong>Step 4: Download and Use</strong><br>
+                Once the QR code is generated, you can download it as an image file by clicking the "Download QR Code" button. Use this QR code in your projects, print materials, or share it digitally for others to scan.</li>
+            </ol>
+        </div>
+
+        <!-- Benefits Paragraph -->
+        <div class="paragraph">
+            <p>Benefits of Using Our QR Code Generator:<br>
+            <ul>
+                <li><strong>Customization:</strong> Our generator offers advanced options to tailor your QR code's appearance to your liking, ensuring it matches your branding or design preferences.</li>
+                <li><strong>Ease of Use:</strong> Creating QR codes with our website is user-friendly, making it accessible for users of all technical levels.</li>
+                <li><strong>Quick and Efficient:</strong> Generate QR codes in seconds, saving you time and effort.</li>
+                <li><strong>Versatility:</strong> QR codes can be used for a wide range of applications, from marketing campaigns to contactless menu access.</li>
+            </ul>
+            </p>
+        </div>
+
+        <!-- Comparison Paragraph -->
+        <div class="paragraph">
+            <p>Comparison with Other QR Code Generator Websites:<br>
+            While there are several QR code generator websites available, we stand out in terms of customization and ease of use. Many other generators may offer limited customization options or require users to navigate through complex interfaces. With our website, you can create QR codes quickly and efficiently while maintaining full control over their appearance. Additionally, we provide a user-friendly experience that ensures a seamless QR code generation process for everyone.</p>
+        </div>
     </div>
 
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
@@ -135,7 +206,10 @@
                 });
 
                 // Show the download button
-                document.getElementById('download-button').style.display = 'inline-block';
+                var downloadButton = document.getElementById('download-button');
+                downloadButton.style.display = 'inline-block';
+                // Set the download link
+                downloadButton.href = qrCodeContainer.firstChild.toDataURL('image/png');
             } else {
                 alert('Please enter some text or a URL.');
             }
